@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { toast } from "react-toastify"
 import playTrack from "../lib/spotify/playTrack"
 import followArtist from "../lib/spotify/followArtist"
 import saveTrack from "../lib/spotify/saveTrack"
@@ -7,7 +8,6 @@ import getAccessToken from "../lib/spotify/getAccessToken"
 import createPlayer from "../lib/spotify/createPlayer"
 import login from "../lib/spotify/login"
 import getCurrentUserProfile from "../lib/spotify/getUser"
-import { toast } from "react-toastify"
 
 const SpotifyContext = createContext(null)
 
@@ -30,7 +30,6 @@ const SpotifyProvider = ({ children }) => {
     const init = async () => {
       const response = await getCurrentUserProfile(accessToken)
       toast.success(`Welcome ${response.display_name}`)
-      console.log("SWEETS RESPONSE", response)
       createPlayer(accessToken, { onReady })
     }
     if (!accessToken) return
