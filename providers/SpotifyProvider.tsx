@@ -6,6 +6,8 @@ import saveTrack from "../lib/spotify/saveTrack"
 import getAccessToken from "../lib/spotify/getAccessToken"
 import createPlayer from "../lib/spotify/createPlayer"
 import login from "../lib/spotify/login"
+import getCurrentUserProfile from "../lib/spotify/getUser"
+import { toast } from "react-toastify"
 
 const SpotifyContext = createContext(null)
 
@@ -25,8 +27,14 @@ const SpotifyProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    const init = async () => {
+      const response = await getCurrentUserProfile(accessToken)
+      toast.success(`Welcome ${response.display_name}`)
+      console.log("SWEETS RESPONSE", response)
+      createPlayer(accessToken, { onReady })
+    }
     if (!accessToken) return
-    createPlayer(accessToken, { onReady })
+    init()
   }, [accessToken])
 
   useEffect(() => {
