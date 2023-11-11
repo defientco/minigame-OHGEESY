@@ -17,20 +17,20 @@ const SpotifyProvider = ({ children }) => {
   const { query } = useRouter()
 
   const playSong = useCallback(async () => {
-    await playTrack(accessToken, deviceId)
     await followArtist(accessToken)
     await saveTrack(accessToken)
+    await playTrack(accessToken, deviceId)
   }, [accessToken, deviceId])
 
-  const onReady = (deviceIdentity) => {
-    setDeviceId(deviceIdentity)
-  }
-
   useEffect(() => {
+    const onReady = async (deviceIdentity) => {
+      setDeviceId(deviceIdentity)
+    }
+
     const init = async () => {
       const response = await getCurrentUserProfile(accessToken)
       toast.success(`Welcome ${response.display_name}`)
-      createPlayer(accessToken, { onReady })
+      await createPlayer(accessToken, { onReady })
     }
     if (!accessToken) return
     init()

@@ -1,5 +1,4 @@
 import Modal from "../Modal"
-import WalletPowerUpButton from "./WalletPowerUpButton"
 import SpotifyPowerUpButton from "./SpotifyPowerUpButton"
 import StartGameWithPowerUpButton from "./StartGameWithPowerUpButton"
 
@@ -28,7 +27,7 @@ const PowerUpModal = ({ handleClick }) => (
         </div>
       </div>
       <SpotifyPowerUpButton />
-      <WalletPowerUpButton />
+
       <StartGameWithPowerUpButton onClick={handleClick} />
     </div>
   </Modal>

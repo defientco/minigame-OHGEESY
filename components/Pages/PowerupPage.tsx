@@ -1,11 +1,15 @@
 import { useState } from "react"
 import PowerUpModal from "../PowerUpModal"
+import { useSpotifyProvider } from "../../providers/SpotifyProvider"
 
 const PowerUpPage = () => {
   const [openModal, setOpenModal] = useState(true)
+  const { deviceId, playSong } = useSpotifyProvider()
 
   const handleClick = () => {
     setOpenModal(false)
+    console.log("SWEETS DEVICE ID", deviceId)
+    if (deviceId) playSong()
   }
 
   return (
@@ -15,13 +19,6 @@ const PowerUpPage = () => {
           <PowerUpModal handleClick={handleClick} />
         </div>
       )}
-
-      <iframe
-        id="godotGame"
-        src="/game/index.html"
-        title="Hypersurveilled"
-        className="h-[100vh] w-[100vw]"
-      />
     </div>
   )
 }
