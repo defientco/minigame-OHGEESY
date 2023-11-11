@@ -1,11 +1,13 @@
 import { useRouter } from "next/router"
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { toast } from "react-toastify"
 import playTrack from "../lib/spotify/playTrack"
 import followArtist from "../lib/spotify/followArtist"
 import saveTrack from "../lib/spotify/saveTrack"
 import getAccessToken from "../lib/spotify/getAccessToken"
 import createPlayer from "../lib/spotify/createPlayer"
 import login from "../lib/spotify/login"
+import getCurrentUserProfile from "../lib/spotify/getUser"
 
 const SpotifyContext = createContext(null)
 
@@ -15,18 +17,23 @@ const SpotifyProvider = ({ children }) => {
   const { query } = useRouter()
 
   const playSong = useCallback(async () => {
-    await playTrack(accessToken, deviceId)
     await followArtist(accessToken)
     await saveTrack(accessToken)
+    await playTrack(accessToken, deviceId)
   }, [accessToken, deviceId])
 
-  const onReady = (deviceIdentity) => {
-    setDeviceId(deviceIdentity)
-  }
-
   useEffect(() => {
+    const onReady = async (deviceIdentity) => {
+      setDeviceId(deviceIdentity)
+    }
+
+    const init = async () => {
+      const response = await getCurrentUserProfile(accessToken)
+      toast.success(`Welcome ${response.display_name}`)
+      await createPlayer(accessToken, { onReady })
+    }
     if (!accessToken) return
-    createPlayer(accessToken, { onReady })
+    init()
   }, [accessToken])
 
   useEffect(() => {

@@ -10,7 +10,8 @@ const login = () => {
 
   generateCodeChallenge(codeVerifier).then((codeChallenge) => {
     const state = generateRandomString(16)
-    const scope = "user-read-private user-read-email streaming"
+    const scope =
+      "user-read-private user-read-email streaming user-library-modify user-follow-modify"
 
     localStorage.setItem("code_verifier", codeVerifier)
 
