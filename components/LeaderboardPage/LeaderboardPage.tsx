@@ -38,7 +38,7 @@ const LeaderboardPage = () => {
             drop-shadow-[0_2px_2px_rgba(0,0,0,0.45)] 
             font-[500]"
         >
-          Relief Game by Heno
+          {process.env.NEXT_PUBLIC_TITLE} by {process.env.NEXT_PUBLIC_ARTIST}
         </div>
       </div>
       <div className="w-full flex justify-center pb-4">
