@@ -8,7 +8,6 @@ const PowerUpPage = () => {
 
   const handleClick = () => {
     setOpenModal(false)
-    console.log("SWEETS DEVICE ID", deviceId)
     if (deviceId) playSong()
   }
 
